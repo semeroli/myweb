@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水浒传经典故事展示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a1d 0%, #2c3e30 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e8d9b7;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 4.5rem;
+            text-shadow: 0 0 15px rgba(232, 217, 183, 0.7);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #c9b18a, #e8d9b7, #c9b18a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .header h1::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #a67c52, transparent);
+        }
+        
+        .header p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 25px auto 0;
+            line-height: 1.8;
+            color: #c9b18a;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            margin: 20px 0 40px;
+            color: #a67c52;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 2rem;
+            color: #a67c52;
+            position: relative;
+            top: 10px;
+        }
+        
+        .timeline-container {
+            position: relative;
+            margin: 60px auto;
+            max-width: 1000px;
+        }
+        
+        .timeline {
+            position: relative;
+            height: 10px;
+            background: linear-gradient(to right, #2c3e30, #a67c52, #2c3e30);
+            border-radius: 5px;
+            margin: 0 auto 100px;
+            width: 90%;
+            box-shadow: 0 0 15px rgba(166, 124, 82, 0.5);
+        }
+        
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            perspective: 1500px;
+        }
+        
+        .card {
+            width: 320px;
+            height: 420px;
+            background: linear-gradient(145deg, #243328, #1c2a20);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            border: 1px solid #a67c52;
+        }
+        
+        .card:hover {
+            transform: translateY(-20px) rotateX(10deg);
+            box-shadow: 0 25px 45px rgba(166, 124, 82, 0.4);
+        }
+        
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #a67c52;
+            opacity: 0.4;
+            z-index: 1;
+        }
+        
+        .card-icon {
+            font-size: 3.5rem;
+            color: #c9b18a;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(201, 177, 138, 0.5);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #e8d9b7;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .card-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #a67c52, transparent);
+        }
+        
+        .card-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-align: left;
+            color: #c9b18a;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-content::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom, rgba(28, 42, 32, 0), rgba(28, 42, 32, 1));
+        }
+        
+        .card-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: rgba(166, 124, 82, 0.15);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(166, 124, 82, 0.3);
+        }
+        
+        .character {
+            font-weight: bold;
+            color: #e8d9b7;
+            font-size: 1.2rem;
+        }
+        
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 4rem;
+            opacity: 0.05;
+            color: #e8d9b7;
+            z-index: 0;
+            transform: rotate(-30deg);
+        }
+        
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #2c3e30;
+            border: 2px solid #a67c52;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background: #a67c52;
+            transform: scale(1.2);
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #c9b18a;
+            border-top: 1px solid rgba(166, 124, 82, 0.3);
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            animation: fadeIn 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+        .card:nth-child(10) { animation-delay: 1s; }
+        
+        /* 响应式设计 */
+        @media (max-width: 1100px) {
+            .cards-container {
+                gap: 20px;
+            }
+            
+            .card {
+                width: 300px;
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .card {
+                width: calc(50% - 20px);
+                height: 420px;
+            }
+            
+            .header h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+                max-width: 400px;
+                height: 380px;
+            }
+            
+            .header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                height: 400px;
+            }
+            
+            .card-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>水浒传</h1>
+            <p>一部描绘北宋末年农民起义的鸿篇巨制，108位好汉的悲欢离合，忠义两全</p>
+            <div class="quote">仗义是林冲，为人最朴忠。江湖驰闻望，慷慨聚英雄</div>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline"></div>
+        </div>
+        
+        <div class="cards-container">
+            <!-- 卡片1：作品主题 -->
+            <div class="card">
+                <div class="card-number">01</div>
+                <div class="card-icon"><i class="fas fa-book-open"></i></div>
+                <h2 class="card-title">作品主题</h2>
+                <div class="card-content">
+                    <p>"官逼民反"是《水浒传》的核心主题，深刻揭露了北宋末年社会矛盾与腐败现象。作品歌颂了英雄反抗精神，展现了普通人在压迫下的觉醒与抗争。</p>
+                    <p>小说通过108位好汉的遭遇，揭示了"乱自上作"的社会现实，表达了人民对正义的向往。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">官逼民反，替天行道</div>
+                </div>
+                <div class="watermark">忠</div>
+            </div>
+            
+            <!-- 卡片2：故事背景 -->
+            <div class="card">
+                <div class="card-number">02</div>
+                <div class="card-icon"><i class="fas fa-landmark"></i></div>
+                <h2 class="card-title">故事背景</h2>
+                <div class="card-content">
+                    <p>北宋末年，政治腐败，社会黑暗。宋徽宗时期，蔡京、高俅等奸臣当道，民不聊生。</p>
+                    <p>小说以山东梁山泊为根据地，描绘了农民起义的壮阔画卷。当时朝廷横征暴敛，百姓生活困苦，各地起义此起彼伏。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">北宋末年，政治腐败</div>
+                </div>
+                <div class="watermark">义</div>
+            </div>
+            
+            <!-- 卡片3：主要人物 -->
+            <div class="card">
+                <div class="card-number">03</div>
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <h2 class="card-title">主要人物</h2>
+                <div class="card-content">
+                    <p>以宋江为首的一百零八位好汉，各有鲜明性格和特长：</p>
+                    <p>• 宋江：忠义双全，人称"及时雨"</p>
+                    <p>• 武松：打虎英雄，勇猛刚烈</p>
+                    <p>• 鲁智深：嫉恶如仇，倒拔垂杨柳</p>
+                    <p>• 林冲：八十万禁军教头，忍辱负重</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">三十六天罡，七十二地煞</div>
+                </div>
+                <div class="watermark">勇</div>
+            </div>
+            
+            <!-- 卡片4：聚义过程 -->
+            <div class="card">
+                <div class="card-number">04</div>
+                <div class="card-icon"><i class="fas fa-fist-raised"></i></div>
+                <h2 class="card-title">聚义过程</h2>
+                <div class="card-content">
+                    <p>各路好汉因不同原因被逼上梁山：</p>
+                    <p>• 林冲被高俅陷害，雪夜上梁山</p>
+                    <p>• 武松为兄报仇，血溅鸳鸯楼</p>
+                    <p>• 宋江怒杀阎婆惜，题反诗被判死罪</p>
+                    <p>• 鲁智深三拳打死镇关西，出家避祸</p>
+                    <p>众人从分散反抗到齐聚梁山，形成强大起义力量。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">逼上梁山，替天行道</div>
+                </div>
+                <div class="watermark">聚</div>
+            </div>
+            
+            <!-- 卡片5：经典故事 -->
+            <div class="card">
+                <div class="card-number">05</div>
+                <div class="card-icon"><i class="fas fa-scroll"></i></div>
+                <h2 class="card-title">经典故事</h2>
+                <div class="card-content">
+                    <p>小说包含众多脍炙人口的故事：</p>
+                    <p>• 鲁提辖拳打镇关西</p>
+                    <p>• 林冲风雪山神庙</p>
+                    <p>• 智取生辰纲</p>
+                    <p>• 景阳冈武松打虎</p>
+                    <p>• 三打祝家庄</p>
+                    <p>• 宋江三败高太尉</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">千古流传的英雄传奇</div>
+                </div>
+                <div class="watermark">传</div>
+            </div>
+            
+            <!-- 卡片6：梁山壮大 -->
+            <div class="card">
+                <div class="card-number">06</div>
+                <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                <h2 class="card-title">梁山壮大</h2>
+                <div class="card-content">
+                    <p>梁山势力不断发展壮大：</p>
+                    <p>• 三败官兵，威震朝廷</p>
+                    <p>• 桃花山、二龙山和梁山三山会合</p>
+                    <p>• 攻破曾头市，为晁盖报仇</p>
+                    <p>• 大破连环马，收服呼延灼</p>
+                    <p>• 攻陷大名府，救出卢俊义</p>
+                    <p>梁山泊声势浩大，成为朝廷心腹大患。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">三山聚义，声势浩大</div>
+                </div>
+                <div class="watermark">势</div>
+            </div>
+            
+            <!-- 卡片7：英雄排座次 -->
+            <div class="card">
+                <div class="card-number">07</div>
+                <div class="card-icon"><i class="fas fa-crown"></i></div>
+                <h2 class="card-title">英雄排座次</h2>
+                <div class="card-content">
+                    <p>梁山泊英雄排定"三十六天罡，七十二地煞"的座次：</p>
+                    <p>• 天魁星：呼保义宋江</p>
+                    <p>• 天罡星：玉麒麟卢俊义</p>
+                    <p>• 天机星：智多星吴用</p>
+                    <p>• 天闲星：入云龙公孙胜</p>
+                    <p>• 天勇星：大刀关胜</p>
+                    <p>排座次标志着梁山组织体系的完善。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">忠义堂石碣受天文</div>
+                </div>
+                <div class="watermark">序</div>
+            </div>
+            
+            <!-- 卡片8：接受招安 -->
+            <div class="card">
+                <div class="card-number">08</div>
+                <div class="card-icon"><i class="fas fa-handshake"></i></div>
+                <h2 class="card-title">接受招安</h2>
+                <div class="card-content">
+                    <p>在宋江等人主导下，梁山全体接受朝廷招安：</p>
+                    <p>• 宋江主张"忠君报国"思想</p>
+                    <p>• 朝廷采用"以盗制盗"策略</p>
+                    <p>• 梁山好汉改编为朝廷军队</p>
+                    <p>• 部分好汉对招安持保留态度</p>
+                    <p>招安是梁山起义的重要转折点。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">封侯万里班超志，忠心一片岳飞魂</div>
+                </div>
+                <div class="watermark">安</div>
+            </div>
+            
+            <!-- 卡片9：征战与消亡 -->
+            <div class="card">
+                <div class="card-number">09</div>
+                <div class="card-icon"><i class="fas fa-skull-crossbones"></i></div>
+                <h2 class="card-title">征战与消亡</h2>
+                <div class="card-content">
+                    <p>接受招安后，梁山好汉奉命四处征战：</p>
+                    <p>• 征辽：抗击辽国侵略</p>
+                    <p>• 征田虎、王庆：平定各地起义</p>
+                    <p>• 征方腊：血战江南起义军</p>
+                    <p>连年征战，一百零八将阵亡大半，仅剩27人生还。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">一将功成万骨枯</div>
+                </div>
+                <div class="watermark">殇</div>
+            </div>
+            
+            <!-- 卡片10：悲剧结局 -->
+            <div class="card">
+                <div class="card-number">10</div>
+                <div class="card-icon"><i class="fas fa-monument"></i></div>
+                <h2 class="card-title">悲剧结局</h2>
+                <div class="card-content">
+                    <p>幸存者未能逃脱朝廷迫害：</p>
+                    <p>• 宋江、卢俊义被奸臣毒死</p>
+                    <p>• 李逵被宋江骗饮毒酒而死</p>
+                    <p>• 吴用、花荣在宋江坟前自缢</p>
+                    <p>• 少数好汉隐退江湖（如李俊出海称王）</p>
+                    <p>轰轰烈烈的梁山起义以悲剧告终。</p>
+                </div>
+                <div class="card-footer">
+                    <div class="character">煞曜罡星今已矣，谗臣贼相尚依然</div>
+                </div>
+                <div class="watermark">悲</div>
+            </div>
+        </div>
+        
+        <div class="nav-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        
+        <div class="footer">
+            <p>《水浒传》是中国四大名著之一，由施耐庵所著，讲述了北宋末年宋江领导的108位好汉在梁山起义的故事</p>
+        </div>
+    </div>
+    
+    <script>
+        // 卡片悬停效果增强
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleY = (x - centerX) / 25;
+                const angleX = (centerY - y) / 25;
+                
+                card.style.transform = `perspective(1500px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-20px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1500px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+        
+        // 导航点点击事件
+        const dots = document.querySelectorAll('.dot');
+        const cardContainer = document.querySelector('.cards-container');
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                // 移除所有激活状态
+                dots.forEach(d => d.classList.remove('active'));
+                // 添加当前激活状态
+                dot.classList.add('active');
+                
+                // 滚动到对应位置
+                const scrollPosition = index * cardContainer.scrollWidth / dots.length;
+                cardContainer.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 自动轮播
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % dots.length;
+            dots.forEach((d, i) => {
+                if (i === currentSlide) {
+                    d.classList.add('active');
+                } else {
+                    d.classList.remove('active');
+                }
+            });
+            
+            const scrollPosition = currentSlide * cardContainer.scrollWidth / dots.length;
+            cardContainer.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 每8秒切换一次
+        setInterval(nextSlide, 8000);
+    </script>
+</body>
+</html>
